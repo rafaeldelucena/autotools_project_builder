@@ -16,13 +16,13 @@ git_remote = 'https://github.com/rafaeldelucena/'+ template + '.git'
 
 retrieve_command = 'mkdir ' + project_path + ' && cd ' + project_path + ' && git clone ' + git_remote
 print retrieve_command
-subprocess.call(retrieve_command, shell=True)
+subprocess.check_call(retrieve_command, shell=True)
 
 
 print 'project_path: ', project_path
 new_files = []
 trunk, dirs, files = next(os.walk(template_path))
-import itertools
+
 valid_files = filter(lambda a: a[0] != '.', files)
 valid_dirs = filter(lambda a: a[0] != '.', dirs)
 
@@ -36,14 +36,12 @@ for b in valid_dirs:
 for file in new_files:
     pattern = '\'s/' + template + '/' + project_name + '/g\''
     replace_command = 'sed -i ' + pattern + ' ' + file
-    print replace_command
-    subprocess.call(replace_command, shell=True)
+    subprocess.check_call(replace_command, shell=True)
 
 merge_command = 'cd ' + project_path + ' && rsync -avz ' + template_path + '/' + ' ' + project_path
-print merge_command
-subprocess.call(merge_command, shell=True)
-subprocess.call('rm -rf ' + template_path, shell=True)
+subprocess.check_call(merge_command, shell=True)
+subprocess.check_call('rm -rf ' + template_path, shell=True)
 
 for e in valid_dirs:
     rename_command = 'cd ' + project_path + '/' + e + ' && rename ' + pattern + ' *'
-    subprocess.call(rename_command, shell=True)
+    subprocess.check_call(rename_command, shell=True)
