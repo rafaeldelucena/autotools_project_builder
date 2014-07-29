@@ -1,2 +1,2 @@
 usage:
-python project_builder.py project_name
+./project_builder <project_name>

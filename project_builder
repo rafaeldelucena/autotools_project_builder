@@ -4,6 +4,10 @@ import subprocess
 import sys
 import os
 
+if len(sys.argv) < 2:
+    print 'usage: project_builder <name>'
+    sys.exit()
+
 project_name = sys.argv[1]
 project_path = os.path.abspath(project_name)
 
